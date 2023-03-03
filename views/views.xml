@@ -1,0 +1,81 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="payroll_timesheets">
+      <field name="name">Employee Payroll Timesheets</field>
+      <field name="model">timesheets.payroll</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="employee"/>
+          <field name="start_date"/>
+          <field name="end_date"/>
+          <field name="captured_by"/>
+        </tree>
+      </field>
+    </record>
+    <record id="payroll_timesheets_form" model="ir.ui.view">
+        <field name="name">Employee Payroll Timesheets</field>
+            <field name="model">timesheets.payroll</field>
+            <field name="arch" type="xml">
+                    <form>
+                      <header>
+                        <button name="validate_submit" type="object" string="Submit Timesheets"  states="draft"/>
+                        <button name="approve" type="object" string="Approve"  states="submitted"/>
+                        <button name="create_expense" type="object" string="Create Expense"  states="approved"/>
+                        <field name="state" widget="statusbar"/>
+                      </header>
+                        <sheet>
+                            <group>
+                              <group>
+                                <field name="employee"/>
+                                <field name="currency_id"/>
+                                <field name="hourly_cost"/>
+                                <field name="total_hours"/>
+
+                                </group>
+                              <group>
+                                <field name="end_date"/>
+                                <field name="start_date"/>
+                                <field name="captured_by"/>
+                                <field name="approved_by"/>
+                                </group>
+                              </group>
+                              <notebook>
+                              <page name="timesheet_lines" string="Timesheet  Lines">
+                            <field name="timesheet_lines">
+                                <tree editable="bottom">
+                                  <field name="name"/>
+                                  <field name="date"/>
+                                  <field name="project"/>
+                                  <field name="task"/>
+                                  <field name="unit_amount"/>
+                                </tree>
+                            </field>
+                              </page>
+                            </notebook>
+                        </sheet>
+                  </form>
+
+            </field>
+    </record>
+    <record model="ir.actions.act_window" id="payroll_timesheets_action_window">
+     <field name="name">Wood Process</field>
+     <field name="res_model">timesheets.payroll</field>
+     <field name="view_mode">tree,form</field>
+   </record>
+   <record id="view_hr_timesheet_expenses_tree" model="ir.ui.view">
+       <field name="name">hr.expense.tree</field>
+       <field name="model">hr.expense</field>
+       <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+       <field name="mode">primary</field>
+       <field name="arch" type="xml">
+         <xpath expr="//field[@name='state']" position="replace">
+
+           <field name="state" widget="statusbar" statusbar_visible="draft,reported,validated,approved,done,refused"/>
+           <button name="action_validate_expenses" string="Validate Expense" states="reported" type="object" class="o_expense_submit"  data-hotkey="v"/>
+
+ </xpath>
+       </field>
+   </record>
+        <menuitem name="Employee Timesheets" id="payroll_timesheets_cust" parent="hr_timesheet.menu_hr_time_tracking" action="payroll_timesheets_action_window"/>
+  </data>
+</odoo>

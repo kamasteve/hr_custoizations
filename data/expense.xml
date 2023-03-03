@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- sgv note - icons will be replaced. Design task is ongoing -->
+        <record id="expense_product_timesheets_pay" model="product.product">
+            <field name="name">Timesheet</field>
+            <field name="description">Timesheet Expense</field>
+            <field name="standard_price">0.0</field>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
+            <field name="default_code">timesheets</field>
+            <field name="can_be_expensed" eval="True"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="sale_line_warn">no-message</field>
+            <field name="image_1920" type="base64" file="hr_expense/static/img/other.svg"/>
+
+        </record>
+    </data>
+  </odoo>
